@@ -1,0 +1,215 @@
+using System.Xml;
+using ZH_forms1_model.Model;
+
+namespace ZH_forms1.View
+{
+    public partial class Form1 : Form
+    {
+        #region Fields
+        private GridButton[,] _buttonGrid = null!;
+        private GameModel _gameModel = null!;
+
+        private System.Windows.Forms.Timer _timeCalculatorTimer = null!;
+        #endregion
+
+
+        public Form1()
+        {
+            _gameModel = new GameModel();
+
+            //connect to private methods, this called when event changed in model
+            _gameModel.NewGame += setUpNewGame;
+            _gameModel.GameAdvance += gameAdvance;
+            _gameModel.GameOver += gameOver;
+
+            _gameModel.CalculateTime += showTime;
+
+            _timeCalculatorTimer = new System.Windows.Forms.Timer();
+            _timeCalculatorTimer.Interval = 1000;
+            _timeCalculatorTimer.Tick += CalculateGameTime; //egybõl modell metódusát hívjuk
+
+            InitializeComponent();
+        }
+
+
+        #region menu Methods
+        private void newGame_Click(object sender, EventArgs e)
+        {
+            _gameModel.modelNewGame();
+        }
+
+        private void setSize10x10_Click(object sender, EventArgs e)
+        {
+            _gameModel.modelSetTable10x10();
+        }
+
+        private void setSize20x20_Click(object sender, EventArgs e)
+        {
+            _gameModel.modelSetTable20x20();
+        }
+
+        private void exit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        #endregion
+
+
+        #region private Methods
+        private void setUpNewGame(object? sender, NewGameEventArgs e)                   //Pálya kirajzoltatása
+        {
+            //GameTable egy panel 500x500 méretben
+            //e.size a kockák méretének szélsességét adja int-be
+
+            if (gameTable.Controls.Count != 0)
+            {
+                gameTable.Controls.Clear();
+            }
+            _buttonGrid = new GridButton[e.size, e.size];
+            int buttonSize = gameTable.Width / e.size;
+            for (int i = 0; i < e.size; i++)
+            {
+                for (int j = 0; j < e.size; j++)
+                {
+                    _buttonGrid[i, j] = new GridButton(i, j);
+                    _buttonGrid[i, j].Location = new Point(j * buttonSize, i * buttonSize); //x = col, y = row
+                    _buttonGrid[i, j].Size = new Size(buttonSize, buttonSize); //size
+                    _buttonGrid[i, j].FlatStyle = FlatStyle.Flat;
+                    if (_gameModel.GetGameField(i, j))
+                    {
+                        _buttonGrid[i, j].BackColor = Color.Black;
+                    }
+                    _buttonGrid[i, j].Enabled = false; //not pressable
+
+                    // _buttonGrid[i, j].Click += buttonClicked; //esemény figyelõ
+                    // _buttonGrid[i, j].Text = "X";
+
+                    //Add to the gameTable Panel
+                    gameTable.Controls.Add(_buttonGrid[i, j]);
+                }
+            }
+
+            _timeCalculatorTimer.Start();
+        }
+
+        private void gameAdvance(object? sender, GameAdvanceEventArgs e)  //ujraszinezi a pályát és átírja szöveget
+        {
+            _buttonGrid[e.player_row, e.player_col].BackColor = Color.DarkBlue; //player field szinez
+            switch (e.direction)
+            {
+                //ellentétes irányba pozicionálva fehérre színezzük a kockákat
+                case 0:
+                    _buttonGrid[e.player_row + 1, e.player_col].BackColor = Color.White;
+                    break;
+                case 1:
+                    _buttonGrid[e.player_row, e.player_col - 1].BackColor = Color.White;
+                    break;
+                case 2:
+                    _buttonGrid[e.player_row - 1, e.player_col].BackColor = Color.White;
+                    break;
+                case 3:
+                    _buttonGrid[e.player_row, e.player_col + 1].BackColor = Color.White;
+                    break;
+                default:
+                    break;
+            }
+
+
+            /*
+            for (int i = 0; i < e.gameTable.GetLength(0); i++)
+            {
+                for (int j = 0; j < e.gameTable.GetLength(1); j++)
+                {
+                    if (e.gameTable[i, j].isBlack)
+                    {
+                        _buttonGrid[i, j].BackColor = Color.Black;
+
+                        _buttonGrid[i, j].Text = "X";                   //felirat hozzáad
+                        _buttonGrid[i, j].ForeColor = Color.White;
+                    }
+                    else
+                    {
+                        _buttonGrid[i, j].BackColor = Color.White;
+                    }
+                }
+            }
+            */
+        }
+
+        private void gameOver(object? sender, GameOverEventArgs e)
+        {
+            if (e.isWon)
+            {
+                DialogResult result = MessageBox.Show("YOU WON! Do you want to play a new game?", "Game Over", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    _gameModel.modelNewGame();
+                }
+                else
+                {
+                    Close();
+                }
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show("YOU LOST! Do you want to play a new game?", "Game Over", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    _gameModel.modelNewGame();
+                }
+                else
+                {
+                    Close();
+                }
+            }
+        }
+
+        private void keyPressed(object? sender, KeyEventArgs e)
+        {
+            // direction = 0 : /\, 1 : >, 2 : \/, 3 : <
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    _gameModel.stepPlayer(0);
+                    break;
+                case Keys.D:
+                    _gameModel.stepPlayer(1);
+                    break;
+                case Keys.S:
+                    _gameModel.stepPlayer(2);
+                    break;
+                case Keys.A:
+                    _gameModel.stepPlayer(3);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /*
+        private void buttonClicked(object? sender, EventArgs e)
+        {
+            GridButton? clickedButton = sender as GridButton;
+
+            if (clickedButton != null)
+            {
+                int row = clickedButton.row;
+                int col = clickedButton.col;
+                _gameModel.modelButtonClicked(row, col);
+            }
+        }
+        */
+
+        private void CalculateGameTime(object? sender, EventArgs e)
+        {
+            _gameModel.modelCalculateGameTime();
+        }
+        private void showTime(object? sender, int time)             //Idõ kiiratása
+        {
+            timeLabel.Text = (time / 60) + ":" + (time % 60);
+        }
+
+        #endregion
+
+    }
+}

@@ -1,0 +1,58 @@
+ZH_forms1:
+	- 10x10 & 20x20 pálya méret
+	- Start/Quit
+	- Clickable gridbutton, fekete lesz
+	- GameOver ha összes kocka fekete
+
+ZH_forms2:
+	- 10x10 & 20x20 pálya méret
+	- Start/Quit
+	- Clickable gridbutton, fekete lesz és fehér x rajta
+	- GameOver ha összes kocka fekete
+	- Timer 1s + timeLabel, show time
+
+ZH_forms3:
+	- 10x10 & 20x20 pálya méret
+	- Start/Quit (onnewgame és creatgametable felcserélve!!)
+	- KeyDown event
+	- GameOver ha kilépsz a pályáról, akadályba ütközöl
+	- Timer 1s + timeLabel, show time
+	- játékos kezdő pozija random-izálva van
+	- Akadályok randomizálva (akadályok száma: pályaméret/10) - ehhez int index hozzáadva GameFieldhez
+
+ZH_forms_alakzatatpakolosZH:
+	- 5x5 & 7x7 & 9x9 pálya méret
+	- Start/Quit
+	- 2 player két színű kockákkal
+	- Clickable gridbutton, (egymásra pakolható) - illegális lepakolást jelzi felufró ablakkal
+	- Lepakolható úgy is hogy kilog azon fele ahova nem lett genrálva kocka, kilóghat így 
+        (saját öszetett algo erre ami vizsgál minden lehetséges formát sarkokat és éleket is)
+	- üresre pakolva 1p, másikéra pakolva 2p
+	- randomizált 3x3 alakzatok,
+	- Mutatja a még kattintható számot mielött vége játéknak -> - GameOver
+	- GameOver mutatja melyik játékso nyert és hány ponttal
+
+ZH_sablon_BlockDocu:
+	- fix 4x4 & 2x2 méret (furán megvalósított gridek)
+	- Start/Quit
+	- Clickable gridbutton,
+	- randomizált 2x2 alakzatok, sorok törlödnek ha telitve van
+	- Exception ha hibás lépés
+	- pontok mutat
+
+ZH_sablon_Támadás(4-4 kocka átléptet túloldalra):
+	- 8x8 & 6x6 & 4x4 pálya méret
+	- Start/Quit
+	- Clickable gridbutton, játékosok kezdő pozija sarokkba 4 bábuval van,
+	- Buttonra kattintva szöveg 1-4 közötti szám lesz
+	- Kocka környékére tudom csak léptetni a bábut kattintással, akadályra lépni nem lehet
+	- !!Öszetett grid buttonok vizsgálata - sarkokat + széleket + közepét!!
+	- mutatja ki jön és melyik bábuval
+
+ZH_forms_bombakereső
+	- 9x9 & 13x13 & 17x17 pálya méret
+	- Start/Quit 
+	- Clickable gridbutton, 3x3 mezőket vizsgál bomba-e (hatákony algo hozzá)
+	- Akadályok randomizálva, nem láthatók, de fekete lesz ha megtalál (akadályok száma: 2n db) 
+	- GameOver ha összes kocka meglett + kiir a kattintások száma
+	- Timer 1s + timeLabel, show time
