@@ -1,0 +1,19 @@
+CREATE Füves false
+CREATE Salakos true
+CREATE Műanyag true
+DELETE 1
+IN Kovács_Ilona 0909
+IN Kiss_József 0303
+BOOK Kiss_József 0303 Füves 2023/08/08.16
+BOOK Kiss_József 0303 Salakos 2023/08/08.16
+BOOK Kovács_Ilona 0909 Salakos 2023/08/08.10
+BOOK Kovács_Ilona 0909 Műanyag 2023/08/08.10
+PAY Kovács_Ilona 0909 2023/08/08
+INCOME 2023/08/08
+DE_BOOK Kovács_Ilona 0909 2023/08/08
+DE_BOOK Kovács_Ilona 0909 2023/08/10
+OUT Kiss_József 0303
+OUT Kiss_József 0303
+DELETE 2	
+DELETE 9
+OUT Kiss_József 0301
