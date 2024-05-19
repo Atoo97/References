@@ -8,7 +8,7 @@ using Game.SnakeGameConzol.Persistance;
 namespace Game.SnakeGameConzol.Model
 {
     /// <summary>
-    /// Kígyó mozgásának irányának.
+    /// Kígyó mozgásának irányai.
     /// </summary>
     public enum Direction { goLeft, goRight, goUp, goDown }
 
