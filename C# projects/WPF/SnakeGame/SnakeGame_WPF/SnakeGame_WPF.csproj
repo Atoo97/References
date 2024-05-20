@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ViewModel\Images\**" />
+    <EmbeddedResource Remove="ViewModel\Images\**" />
+    <None Remove="ViewModel\Images\**" />
+    <Page Remove="ViewModel\Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="View\Images\background.jpg" />
+    <None Remove="View\Images\body.png" />
+    <None Remove="View\Images\down.png" />
+    <None Remove="View\Images\egg.png" />
+    <None Remove="View\Images\left.png" />
+    <None Remove="View\Images\right.png" />
+    <None Remove="View\Images\up.png" />
+    <None Remove="View\Images\wall.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="View\Images\background.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Images\body.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Images\down.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Images\egg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Images\left.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Images\right.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Images\up.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Images\wall.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SnakeGame\SnakeGame.csproj" />
+  </ItemGroup>
+
+</Project>
