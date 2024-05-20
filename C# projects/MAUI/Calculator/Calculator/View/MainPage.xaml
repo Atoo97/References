@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:ELTE.Calculator.View"
+             xmlns:resx="clr-namespace:ELTE.Calculator.Resources"
+             x:Class="ELTE.Calculator.View.MainPage"
+             Title="Calculator">
+    <!-- a saját lap típusunkat használjuk fel -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- stílusok a vezérlőknek -->
+            <Style x:Key="BasicButtonStyle" TargetType="Button">
+                <Setter Property="FontSize">
+                    <Setter.Value>
+                        <OnIdiom x:TypeArguments="x:Double" Phone="15" Default="30"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="MinimumWidthRequest">
+                    <Setter.Value>
+                        <OnIdiom x:TypeArguments="x:Double" Phone="40" Default="60"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="MinimumHeightRequest">
+                    <Setter.Value>
+                        <OnIdiom x:TypeArguments="x:Double" Phone="40" Default="60"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="2" />
+            </Style>
+            <Style x:Key="FunctionButtonStyle" TargetType="Button" BasedOn="{StaticResource BasicButtonStyle}">
+                <Setter Property="BackgroundColor" Value="Green" />
+                <Setter Property="BorderColor" Value="Green" />
+            </Style>
+            <Style x:Key="NumberButtonStyle" TargetType="Button" BasedOn="{StaticResource BasicButtonStyle}">
+                <Setter Property="BackgroundColor" Value="Gray" />
+                <Setter Property="BorderColor" Value="Gray" />
+            </Style>
+            <Style x:Key="NumberFieldStyle" TargetType="Label">
+                <Setter Property="FontSize">
+                    <Setter.Value>
+                        <OnIdiom x:TypeArguments="x:Double" Phone="20" Default="60"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HorizontalTextAlignment" Value="End" />
+                <Setter Property="Margin" Value="10" />
+            </Style>
+            <Style x:Key="NumberListViewLabelStyle" TargetType="Label">
+                <Setter Property="FontSize">
+                    <Setter.Value>
+                        <OnIdiom x:TypeArguments="x:Double" Phone="12" Default="20"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <!-- viselkedéssel kezeljük az elforgatást -->
+        <StackLayout.Behaviors>
+            <view:StackLayoutOrientationBehavior />
+            <view:ViewOrientationBehavior />
+        </StackLayout.Behaviors>
+
+        <Grid Padding="0" ColumnSpacing="0" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- viselkedéssel kezeljük az elforgatást -->
+            <Grid.Behaviors>
+                <view:ViewOrientationBehavior />
+            </Grid.Behaviors>
+
+            <Label Text="{Binding NumberFieldValue}" Grid.Row="0" Grid.ColumnSpan="4" Style="{StaticResource NumberFieldStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="1" Text="1" Grid.Row="1" Grid.Column="0" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="2" Text="2" Grid.Row="1" Grid.Column="1" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="3" Text="3" Grid.Row="1" Grid.Column="2" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="4" Text="4" Grid.Row="2" Grid.Column="0" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="5" Text="5" Grid.Row="2" Grid.Column="1" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="6" Text="6" Grid.Row="2" Grid.Column="2" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="7" Text="7" Grid.Row="3" Grid.Column="0" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="8" Text="8" Grid.Row="3" Grid.Column="1" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="9" Text="9" Grid.Row="3" Grid.Column="2" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="0" Text="0" Grid.Row="4" Grid.Column="0" Style="{StaticResource NumberButtonStyle}" Grid.ColumnSpan="2" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="{Binding DecimalSeparator}" Text="{Binding DecimalSeparator}" Grid.Row="4" Grid.Column="2" Style="{StaticResource NumberButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="+" Text="+" Grid.Row="1" Grid.Column="3" Style="{StaticResource FunctionButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="-" Text="-" Grid.Row="2" Grid.Column="3" Style="{StaticResource FunctionButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="*" Text="×" Grid.Row="3" Grid.Column="3" Style="{StaticResource FunctionButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="/" Text="÷" Grid.Row="4" Grid.Column="3" Style="{StaticResource FunctionButtonStyle}" />
+            <Button Command="{Binding CalculateCommand}" CommandParameter="=" Text="=" Grid.Row="5" Grid.Column="0" Style="{StaticResource FunctionButtonStyle}" Grid.ColumnSpan="4" />
+        </Grid>
+        
+        <StackLayout Orientation="Vertical">
+            <StackLayout.Behaviors>
+                <view:ViewOrientationBehavior />
+            </StackLayout.Behaviors>
+
+            <Label Text="{x:Static resx:ApplicationText.HistoryListTitle}" Style="{StaticResource NumberListViewLabelStyle}" />
+            <ListView ItemsSource="{Binding Calculations}" WidthRequest="380">
+                <!-- viselkedéssel kezeljük az elforgatást -->
+                <ListView.Behaviors>
+                    <view:ViewOrientationBehavior />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding}" Style="{StaticResource NumberListViewLabelStyle}" />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
