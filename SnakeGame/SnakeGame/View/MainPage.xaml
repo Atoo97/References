@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SnakeGame.View.MainPage"
+             Title="">
+
+    <ContentPage.MenuBarItems >
+        <MenuBarItem Text="Field size: ">
+            <MenuFlyoutItem Text="Small" Command="{Binding SizeChangeCommand}" CommandParameter="Small" />
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="Medium" Command="{Binding SizeChangeCommand}" CommandParameter="Medium" />
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="Large" Command="{Binding SizeChangeCommand}" CommandParameter="Large" />
+        </MenuBarItem>
+        <MenuBarItem Text="{Binding Size}"/>
+    </ContentPage.MenuBarItems>
+
+
+    <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            
+            <HorizontalStackLayout Grid.Row="0" Spacing="8" Margin="4" HorizontalOptions="StartAndExpand" >
+                <Label Text="Score: " TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Score} " TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Grid.Row="0" Spacing="8" Margin="4" HorizontalOptions="EndAndExpand" >
+                <Label Text="HighScore: " TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding HighScore} " TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+
+            
+            <!--Tábla-->
+            <Grid BindableLayout.ItemsSource="{Binding Fields}" HorizontalOptions="Center" VerticalOptions="Center"
+                  HeightRequest="{Binding Length}"
+                      RowDefinitions="{Binding RowDefinitions}" ColumnDefinitions="{Binding ColumnDefinitions}" Grid.Row="1">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            CornerRadius="0" BackgroundColor="{Binding Color}"
+                            Grid.Row="{Binding Y}" Grid.Column="{Binding X}" Padding="0"/>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </Grid>
+
+
+            <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="10">
+                <Button BackgroundColor="LightBlue" Text="UP" Command="{Binding DirectionChangeCommand}" CommandParameter="up" />
+                <Button BackgroundColor="LightBlue" Text="DOWN" Command="{Binding DirectionChangeCommand}" CommandParameter="down" />
+                <Button BackgroundColor="Green" Text="{Binding Starter}" Command="{Binding StartStopCommand}" Padding="2,2" />
+                <Button Background="Red" Text="Restart" Command="{Binding RestartCommand}" Padding="2,2"/>
+                <Button BackgroundColor="LightBlue" Text="LEFT" Command="{Binding DirectionChangeCommand}" CommandParameter="left" />
+                <Button BackgroundColor="LightBlue" Text="RIGHT" Command="{Binding DirectionChangeCommand}" CommandParameter="right" />
+            </StackLayout>
+        </Grid>
+    </StackLayout>
+
+
+
+</ContentPage>
